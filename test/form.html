@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="keywords" content="Form Show">
+    <meta name="description" content="表单应用">
+    <title>Form Show</title>
+</head>
+
+<body>
+    <div class="login">
+        <form action="/getinfo" method="post">
+            <div class="username">
+                <label for="username">姓名</label>
+                <input id="username" type="text" name="username" value="用户名">
+            </div>
+            <div class="password">
+                <label for="password">密码</label>
+                <input id="password" type="password" name="password" value="xxxxxxxx">
+            </div>
+            <div class="sex">
+                <label>性别</label>
+                <input id="sex_male" type="radio" name="sex" value="男" checked="checked"><label for="sex_male">男</label>
+                <input id="sex_female" type="radio" name="sex" value="女"><label for="sex_female">女</label>
+            </div>
+            <div class="sex_pre">
+                <label>取向</label>
+                <input id="sex_pre_male" type="radio" name="sex_pre" value="男"><label for="sex_pre_male">男</label>
+                <input id="sex_pre_female" type="radio" name="sex_pre" value="女" checked="checked"><label for="sex_pre_female">女</label>
+            </div>
+            <div class="hobby">
+                <label>爱好</label>
+                <input id="dota" type="checkbox" name="hobby" value="dota"><label for="dota">dota</label>
+                <input id="travel" type="checkbox" name="hobby" value="旅游" checked="checked"><label for="travel">旅游</label>
+                <input id="pet" type="checkbox" name="hobby" value="宠物" checked="checked"><label for="pet">宠物</label>
+            </div>
+            <div class="comment">
+                <label for="comment">评论：</label>
+                <textarea id="comment" rows="10" cols="40">ddd
+                    
+                </textarea>
+            </div>
+            <div class="car">
+                <label for="car">我的car：</label>
+                <select id="car" name="car">
+                    <option value="sabo">萨博</option>
+                    <option value="bmw">宝马</option>
+                    <option value="bech">奔驰</option>
+                </select>
+                <input id="submit" type="submit" value="提交">
+            </div>
+        </form>
+    </div>
+</body>
+
+</html>
