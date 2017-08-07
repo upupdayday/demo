@@ -61,6 +61,10 @@ header img{
   border-bottom: 3px solid;
 }
 
+.contact a {
+  display:inline-block;
+}
+
 .contact .iconfont {
   /* padding: 5px; */
 }
