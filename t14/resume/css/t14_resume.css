@@ -1,11 +1,11 @@
 
 @font-face {
   font-family: 'iconfont';  /* project id 371786 */
-  src: url('//at.alicdn.com/t/font_47vtkerq8fy4aemi.eot');
-  src: url('//at.alicdn.com/t/font_47vtkerq8fy4aemi.eot?#iefix') format('embedded-opentype'),
-  url('//at.alicdn.com/t/font_47vtkerq8fy4aemi.woff') format('woff'),
-  url('//at.alicdn.com/t/font_47vtkerq8fy4aemi.ttf') format('truetype'),
-  url('//at.alicdn.com/t/font_47vtkerq8fy4aemi.svg#iconfont') format('svg');
+  src: url('//at.alicdn.com/t/font_bp9p6goa08rdlsor.eot');
+  src: url('//at.alicdn.com/t/font_bp9p6goa08rdlsor.eot?#iefix') format('embedded-opentype'),
+  url('//at.alicdn.com/t/font_bp9p6goa08rdlsor.woff') format('woff'),
+  url('//at.alicdn.com/t/font_bp9p6goa08rdlsor.ttf') format('truetype'),
+  url('//at.alicdn.com/t/font_bp9p6goa08rdlsor.svg#iconfont') format('svg');
 }
 
 .iconfont {
@@ -14,8 +14,108 @@
   font-style:normal;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  color: #888;
+  padding: 5px;
 }
 
 h3{
-  color:red;
+  padding-bottom: 10px;
+}
+
+ul,ol{
+  margin: 0;
+  padding: 0;
+  list-style:none;
+}
+
+.layout {
+  width: 800px;
+  margin: 0 auto;
+  /* border: 1px solid; */
+  padding: 10px;
+
+}
+header {
+  display: flex;
+  position: relative;
+  align-items: center;
+}
+
+.name {
+  margin-left: 20px;
+}
+
+header img{
+  width: 100px;
+  height: 100px;
+  border-radius: 50px;
+}
+
+.contact{
+  flex:1;
+  /* border:1px solid; */
+  padding-left: 170px;
+}
+
+.contact h3 {
+  border-bottom: 3px solid;
+}
+
+.contact .iconfont {
+  /* padding: 5px; */
+}
+
+.content{
+  padding-left: 10px;
+}
+
+.content h3, footer h3 {
+  width: 330px;
+  border-bottom:1px solid #777;
+
+}
+
+.content ul {
+  border-left: 1px solid;
+  padding-left:40px;
+  /* position:relative; */
+}
+
+.content li{
+  /* border-left: 1px solid; */
+  position:relative;
+  vertical-align: center;
+  height: line-height;
+  /* padding-left:40px; */
+
+}
+
+.content li:before {
+  position: absolute;
+  content: '';
+  display: inline-block;
+  width: 0px;
+  height: 0px;
+  border: 6px solid #000;
+  border-radius: 6px;
+  left:-46px;
+}
+
+.content span {
+  color: #888;
+}
+
+footer {
+  display: flex;
+  justify-content: space-between;
+
+}
+
+.box {
+  display: flex;
+  justify-content: space-between;
+}
+
+.box li {
+  line-height: 2em;
 }
