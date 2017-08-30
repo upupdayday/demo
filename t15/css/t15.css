@@ -51,8 +51,9 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .layout {  
-  width: 1300px;  
+/*   width: 1300px;   */
   margin: 0 auto;
+  
 }
 
 /*-----header style------*/
