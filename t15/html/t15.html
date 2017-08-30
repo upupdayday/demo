@@ -9,7 +9,7 @@
 <body>
 <!--header -->
   <header>
-    <div class="navi layout">
+    <div class="navi">
       <div class="start">
         <a href="">Start Project</a>
       </div>
@@ -29,13 +29,13 @@
   </header>
 
 <!--services -->
-  <div class="service layout">
-    <div class="title-text">
+  <div class="service">
+    <div class="title-text layout">
       <h2>SERVICES</h2>
       <p>Lorem ipsum dolor sit amet consectetur.</p>
     </div>
 
-    <div class="content-container">
+    <div class="content-container layout">
       <div class="content">
         <span class="service-iconfont">&#xe612;</span>
         <h4>E-Commerce</h4>
@@ -55,12 +55,12 @@
   </div>
 
 <!--port -->
-  <div class="port layout">
-    <div class="title-text">
+  <div class="port">
+    <div class="title-text layout">
       <h2>PORTFOLIO</h2>
       <p>Lorem ipsum dolor sit amet consectetur.</p>
     </div>
-    <div class="content-container">
+    <div class="content-container layout">
       <div class="box">
         <div class="cover-image">
           <div class="cover cover-iconfont">&#xe600;</div>
@@ -133,12 +133,12 @@
   </div>
 
 <!--about -->
-  <div class="about layout">
-    <div class="title-text">
+  <div class="about">
+    <div class="title-text layout">
       <h2>ABOUT</h2>
       <p>Lorem ipsum dolor sit amet consectetur.</p>
     </div>
-    <ul class="timeline">
+    <ul class="timeline layout">
       <li>
           <img src="http://os5rbfnva.bkt.clouddn.com/task15/1.jpg" >
         <div class="timeline-text">
@@ -183,12 +183,12 @@
   </div>
 
 <!--team -->
-  <div class="team layout">
-    <div class="title-text">
+  <div class="team">
+    <div class="title-text layout">
       <h2>OUR AMAZING TEAM</h2>
       <p>Lorem ipsum dolor sit amet consectetur.</p>
     </div>
-    <div class="team-box">
+    <div class="team-box layout">
 
       <div class="team-member">
         <img src="http://os5rbfnva.bkt.clouddn.com/task15/5.jpg" alt="">
@@ -228,15 +228,15 @@
           </div>
         </div>
       </div>
-
     </div>
-    <div class="team-text">
+
+    <div class="team-text layout">
       <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aut eaque, laboriosam veritatis, quos non quis ad perspiciatis, totam corporis ea, alias ut unde.
       </p>
     </div>
   </div>
-  
-<!--logo -->  
+
+<!--logo -->
   <div class="logo layout">
     <div class="logo-img">
       <a href="">
@@ -265,16 +265,18 @@
   <div class="contact">
     <div class="title-text layout">
       <h2>CONTACT US</h2>
-      <p>Lorem ipsum dolor sit amet consectetur.</p>    
-    </div>    
+      <p>Lorem ipsum dolor sit amet consectetur.</p>
+    </div>
     <form action="/getInfo" method="post" class="layout">
-      <div class="left-input">
-        <input id="name" type="text" name="name" placeholder="YOUR NAME*">
-        <input id="name" type="text" name="name" placeholder="YOUR EMAIL*">
-        <input id="name" type="text" name="name" placeholder="YOUR PHONE*">
-      </div>
-      <div class="right-input">
-        <textarea name="message" placeholder="YOUR MESSAGE*"></textarea>
+      <div class="form-input">
+        <div class="left-input">
+          <input id="name" type="text" name="name" placeholder="YOUR NAME*">
+          <input id="name" type="text" name="name" placeholder="YOUR EMAIL*">
+          <input id="name" type="text" name="name" placeholder="YOUR PHONE*">
+        </div>
+        <div class="right-input">
+          <textarea name="message" placeholder="YOUR MESSAGE*"></textarea>
+        </div>
       </div>
       <div class="submit">
         <input type="submit" value="send message" />
@@ -283,7 +285,7 @@
   </div>
 
 <!--footer -->
-  <footer>
+  <footer class="layout">
     <div class="copyright footer-box">
       <span>Copyright © Your Website 2014</span>
     </div>
