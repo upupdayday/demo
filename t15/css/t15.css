@@ -450,11 +450,6 @@ form {
 
 .left-input input {
   display: block;
-  font-size: 14px;
-  line-height: 1.5;
-  color: #555;
-  background-color: #fff;
-  background-image: none;
   width: 513px;
   height: 20px;
   margin-bottom: 25px;
@@ -465,11 +460,6 @@ form {
 
 .right-input textarea {
   display: block;
-  font-size: 14px;
-  line-height: 1.5;
-  color: #555;
-  background-color: #fff;
-  background-image: none;
   width: 513px;
   height: 194px;
   padding: 20px;
@@ -477,9 +467,14 @@ form {
   border-radius: 4px;
 }
 
-　　input::-webkit-input-placeholder, textarea::-webkit-input-placeholder {
-　　color: #666;
-　　}
+input::-webkit-input-placeholder, textarea::-webkit-input-placeholder {
+　color: #666;
+  font-size: 14px;
+  line-height: 1.5;
+  background-color: #fff;
+  background-image: none;
+  color: red;
+}
 
 .submit input {
     color: #fff;
