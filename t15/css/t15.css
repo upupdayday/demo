@@ -34,29 +34,25 @@ ul,ol {
 a {
   text-decoration: none;
   color:inherit;
-}
-
-.body {
-  padding: 10px;
-
-}
-
-.layout {
-  /* width: 1300px; */
-  /* margin: 0 auto; */
-}
-
+} 
+ 
 body {
   font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
   font-size: 14px;
   line-height: 1.42857143;
   color: #333;
   background-color: #fff;
+  min-width: 800px;
 }
 
 h1, h2, h3, h4, h5, h6 {
     font-family: Montserrat, "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-weight: 700;
+}
+
+.layout {  
+  width: 1300px;  
+  margin: 0 auto;
 }
 
 /*-----header style------*/
@@ -91,11 +87,9 @@ header {
   display: flex;
 }
 
-.navi li{
-  padding: 15px;
-}
-
 .navi li a {
+  display: block;
+  padding: 15px;
   font-family: Montserrat, "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-weight: 400;
   letter-spacing: 1px;
@@ -169,7 +163,6 @@ header {
 .service .content-container {
   display: flex;
   justify-content: center;
-  margin:0 auto;
 }
 
 .service .content {
@@ -276,8 +269,8 @@ header {
   text-align: center;
 }
 
-.timeline>li {
-  margin-bottom: 100px;
+.timeline>li {  
+  padding: 0 0 125px 0;
   position: relative;
 }
 
@@ -286,8 +279,9 @@ header {
   border-left: 2px solid #f1f1f1;
   height: 100%;
   position:absolute;
-  top: 170px;
+  top: 0px;
   left: 50%;
+  z-index: -1;
 }
 
 .timeline>li:last-child::after {
@@ -470,6 +464,7 @@ form {
 }
 
 .right-input textarea {
+  display: block;
   font-size: 14px;
   line-height: 1.5;
   color: #555;
@@ -482,6 +477,10 @@ form {
   border-radius: 4px;
 }
 
+　　input::-webkit-input-placeholder, textarea::-webkit-input-placeholder {
+　　color: #666;
+　　}
+
 .submit input {
     color: #fff;
     background-color: #fed136;
@@ -492,6 +491,10 @@ form {
     border-radius: 3px;
     font-size: 18px;
     padding: 20px 40px;
+}
+
+.submit input:hover {
+  cursor: pointer;
 }
 
 /*-----footer style------*/
