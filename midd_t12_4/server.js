@@ -1,7 +1,7 @@
 var http = require('http');
 var fs = require('fs');
 var url = require('url');
-var path = require('path')
+var path = require('path');
 
 function routePath(req, res) {
     var pathObj = url.parse(req.url, true);
@@ -9,43 +9,21 @@ function routePath(req, res) {
 
     switch (pathObj.pathname) {
         case '/getWeather':
-            var ret
-            switch (pathObj.query.city) {
-                case '北京':
-                    ret = {
-                        city: 'beijing',
-                        weather: '晴天',
-                        picture: 'imgs/sunny.png'
-                    }
-                    break;
-
-                case '杭州':
-                    ret = {
-                        city: 'hangzhou',
-                        weather: '小雨',
-                        picture: 'imgs/light_rain.png'
-                    }
-                    break;
-
-                default:
-                    ret = {
-                        city: JSON.stringify(pathObj.query.city),
-                        weather: '未知',
-                        picture: 'imgs/shy.jpg'
-                    }
-                    break;
+            var ret = {
+                index: JSON.stringify(pathObj.query.index),
+                text: pathObj.query.index,
             }
 
             res.setHeader('Content-Type', 'text/plain; charset=utf-8')
-            setTimeout(function() { res.end(JSON.stringify(ret)) }, 3000)
+                // setTimeout(function() { res.end(JSON.stringify(ret)) }, 3000)
 
             break;
         default:
             console.log(pathObj.pathname)
             staticRoot(path.resolve(__dirname, 'static'), req, res);
     }
-
 }
+
 
 function staticRoot(staticPath, req, res) {
     var pathObj = url.parse(req.url, true)
