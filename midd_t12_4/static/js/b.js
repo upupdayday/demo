@@ -49,16 +49,16 @@ var btn = document.querySelector('#loadMore');
 
 
 btn.addEventListener('click', function loadMore(e) {
-    var target = e.target;
-    if (target.tagName.toLowerCase() === 'a') {
-        console.log('1111****' + target);
-        var node = document.createElement('li');
-        node.classList.add('ele');
-        console.log('222****' + target);
-        ct.appendChild(node);
-        console.log('333****' + target);
-        console.log('444****' + target);
-    }
+    // var target = e.target;
+    // if (target.tagName.toLowerCase() === 'a') {
+    console.log('1111****');
+    var node = document.createElement('li');
+    // node.classList.add('ele');
+    console.log('222****');
+    ct.appendChild(node);
+    console.log('333****');
+    console.log('444****');
+    // }
 
     /*target.disabled = true;
 
