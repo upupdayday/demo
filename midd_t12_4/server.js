@@ -8,14 +8,16 @@ function routePath(req, res) {
     console.log(pathObj);
 
     switch (pathObj.pathname) {
-        case '/getWeather':
-            var ret = {
-                index: JSON.stringify(pathObj.query.index),
-                text: pathObj.query.index,
+        case '/loadMore':
+            var curIdx = pathObj.query.curIndex
+            var len = pathObj.query.len
+            var data = []
+            for (var i = 0; i < len; i++) {
+                data.push('内容' + (parseInt(curIdx) + i))
             }
-
-            res.setHeader('Content-Type', 'text/plain; charset=utf-8')
-                // setTimeout(function() { res.end(JSON.stringify(ret)) }, 3000)
+            res.end(JSON.stringify(data))
+                /*res.setHeader('Content-Type', 'text/plain; charset=utf-8')
+                setTimeout(function() { res.end(JSON.stringify(data)) }, 2000)*/
 
             break;
         default:
