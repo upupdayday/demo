@@ -1,5 +1,5 @@
 /*悬浮样式*/
-var ct = document.querySelector('#content');
+/*
 ct.addEventListener('mouseover', function show(e) {
     var target = e.target;
     if (target.tagName.toLowerCase() === 'li') {
@@ -12,9 +12,10 @@ ct.addEventListener('mouseout', function remove(e) {
     if (target.tagName.toLowerCase() === 'li') {
         target.classList.remove('hover');
     }
-})
+})*/
 
 /*点击加载*/
+var ct = document.querySelector('#content');
 var xhr = new XMLHttpRequest();
 var btn = document.querySelector('#loadMore');
 var curIndex = 0 //当前要加载的数据的序号

@@ -30,7 +30,7 @@ ul {
     text-decoration: none;
 }
 
-.hover {
+#content li:hover {
     background: green;
     color: #fff;
 }
