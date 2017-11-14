@@ -15,6 +15,7 @@ function routePath(req, res) {
             for (var i = 0; i < len; i++) {
                 data.push('内容' + (parseInt(curIdx) + i))
             }
+
             res.end(JSON.stringify(data))
                 /*res.setHeader('Content-Type', 'text/plain; charset=utf-8')
                 setTimeout(function() { res.end(JSON.stringify(data)) }, 2000)*/

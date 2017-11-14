@@ -18,45 +18,92 @@ ct.addEventListener('mouseout', function remove(e) {
 var ct = document.querySelector('#content');
 var xhr = new XMLHttpRequest();
 var btn = document.querySelector('#loadMore');
-var curIndex = 0 //当前要加载的数据的序号
+//var curIndex = 0 //当前要加载的数据的序号
 var len = 5 // 每次加载多少个数据
 var isLoading = false //状态锁，用于判断是否在加载数据
 
 btn.addEventListener('click', function loadMore(e) {
+    console.log("1")
     var target = e.target;
     target.disabled = true;
+
+    console.log("2")
 
     if (isLoading) {
         target.disabled = false;
         return;
     }
 
+    console.log("3")
+
     isLoading = true;
     var temp = document.getElementsByClassName('ele');
     var curIndex = temp.length + 1; //要加载的首序号
 
+    console.log("4")
+
     xhr.open('GET', '/loadMore?curIndex=' + curIndex + '&len=' + len)
     xhr.send();
 
+    console.log("5")
+
     xhr.addEventListener('load', function() {
-        if ((xhr.readyState === 4 && xhr.status >= 200 && xhr.status < 300) || xhr.status === 304) {
+
+        console.log("6")
+            //xhr.readyState === 4 && 
+        if ((xhr.status >= 200 && xhr.status < 300) || xhr.status === 304) {
+
+            console.log("7")
+
             var data = JSON.parse(xhr.response)
-            console.log("********")
-            console.log(data)
-            console.log(data.length)
+            console.log("****8****")
             for (var i = 0; i < data.length; i++) {
+                console.log("9")
                 var node = document.createElement('li');
                 node.innerText = data[i];
                 node.classList.add('ele');
                 ct.appendChild(node);
             }
+
+            console.log("10")
         } else {
+
+            console.log("11")
             e.stopPropagation();
         }
     })
 
+    /*xhr.onload = function() {
+        console.log("6")
+            //xhr.readyState === 4 && 
+        if ((xhr.status >= 200 && xhr.status < 300) || xhr.status === 304) {
+
+            console.log("7")
+
+            var data = JSON.parse(xhr.response)
+            console.log("****8****")
+            for (var i = 0; i < data.length; i++) {
+                console.log("9")
+                var node = document.createElement('li');
+                node.innerText = data[i];
+                node.classList.add('ele');
+                ct.appendChild(node);
+            }
+
+            console.log("10")
+        } else {
+
+            console.log("11")
+            e.stopPropagation();
+        }
+    }*/
+
+    console.log("12")
+
     isLoading = false;
     target.disabled = false
+
+    console.log("13")
 })
 
 /*function loadMore(e) {
