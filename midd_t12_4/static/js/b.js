@@ -49,8 +49,10 @@ btn.addEventListener('click', function loadMore(e) {
         } else {
             e.stopPropagation();
         }
+
+        isLoading = false;
+        target.disabled = false
     })
 
-    isLoading = false;
-    target.disabled = false
+
 })

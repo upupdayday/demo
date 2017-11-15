@@ -1,10 +1,18 @@
-var xhr = new XMLHttpRequest();
 var btn = document.querySelector('#search');
+var isLoading = false //状态锁，用于判断是否在加载数据
 
 btn.addEventListener('click', function() {
-    /** 获取城市名称，发送*/
     btn.disabled = true;
+    /** 获取城市名称，发送*/
+    if (isLoading) {
+        target.disabled = false;
+        return;
+    }
+
+    isLoading = true;
+
     var city = document.querySelector('#city');
+    var xhr = new XMLHttpRequest();
     xhr.open('GET', '/getWeather?city=' + city.value, true)
     xhr.send();
 
@@ -16,7 +24,8 @@ btn.addEventListener('click', function() {
             var resultObj = JSON.parse(xhr.responseText)
             weatherText.innerText = resultObj.weather;
             weatherImg.src = resultObj.picture;
-            btn.disabled = false
+            btn.disabled = false;
+            isLoading = false;
         }
     })
 })
