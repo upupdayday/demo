@@ -9,7 +9,6 @@ function routePath(req, res) {
 
     switch (pathObj.pathname) {
         case '/getWeather':
-            console.log('*****1*****');
             var ret
             switch (pathObj.query.city) {
                 case '北京':
@@ -18,7 +17,6 @@ function routePath(req, res) {
                         weather: '晴天',
                         picture: 'imgs/sunny.png'
                     }
-                    console.log('*****1*****');
                     break;
 
                 case '杭州':
@@ -38,8 +36,14 @@ function routePath(req, res) {
                     break;
             }
 
+            console.log(ret)
             res.setHeader('Content-Type', 'text/plain; charset=utf-8')
-            setTimeout(function() { res.end(JSON.stringify(ret)) }, 3000)
+            if (pathObj.query.callback) {
+                setTimeout(function() { res.end(pathObj.query.callback + '(' + JSON.stringify(ret) + ')') }, 3000)
+
+            } else {
+                setTimeout(function() { res.end(JSON.stringify(ret)) }, 3000)
+            }
 
             break;
         default:
@@ -73,4 +77,4 @@ var server = http.createServer(function(req, res) {
 })
 
 server.listen(8080)
-console.log('visit http://localhost:8080')
+console.log('visit http://localhost:8080');

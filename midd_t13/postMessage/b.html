@@ -1,0 +1,34 @@
+<html>
+<style>
+    html,
+    body {
+        margin: 0;
+    }
+    
+    input {
+        margin: 20px;
+        width: 200px;
+    }
+</style>
+
+<input id="input" type="text" placeholder="http://b.test.com:8080/b.html">
+<script>
+    // URL: http://b.test.com:8080/b.html
+
+    $('#input').addEventListener('input', function() {
+        window.parent.postMessage(this.value, 'http://a.test.com:8080/');
+    })
+    window.addEventListener('message', function(e) {
+        if (e.origin !== "http://a.test.com:8080") {
+            return
+        }
+        $('#input').value = e.data
+        console.log(e.data);
+    });
+
+    function $(id) {
+        return document.querySelector(id);
+    }
+</script>
+
+</html>

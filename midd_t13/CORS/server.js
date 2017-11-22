@@ -9,7 +9,6 @@ function routePath(req, res) {
 
     switch (pathObj.pathname) {
         case '/getWeather':
-            console.log('*****1*****');
             var ret
             switch (pathObj.query.city) {
                 case '北京':
@@ -18,7 +17,6 @@ function routePath(req, res) {
                         weather: '晴天',
                         picture: 'imgs/sunny.png'
                     }
-                    console.log('*****1*****');
                     break;
 
                 case '杭州':
@@ -38,6 +36,7 @@ function routePath(req, res) {
                     break;
             }
 
+            res.setHeader('Access-Control-Allow-Origin', 'http://a.com:8080')
             res.setHeader('Content-Type', 'text/plain; charset=utf-8')
             setTimeout(function() { res.end(JSON.stringify(ret)) }, 3000)
 
