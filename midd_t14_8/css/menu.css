@@ -1,0 +1,65 @@
+body {
+    margin: 8px;
+}
+
+ul,
+li {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+.navi-aside {
+    width: 200px;
+    background: #c7171e;
+}
+
+.category {
+    position: relative;
+}
+
+.cate-title,
+.icon-goto {
+    /*行内元素上下的margin，padding不生效*/
+    display: block;
+    color: #fff;
+    font-size: 14px;
+    margin: 0 10px;
+    padding: 10px;
+    border-bottom: 1px dotted #de272e;
+}
+
+.icon-goto {
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    margin-right: 0px;
+}
+
+.submenu {
+    position: absolute;
+    top: 0px;
+    left: 200px;
+    background: #fff;
+    border: 1px solid #ccc;
+    width: 210px;
+    font-size: 12px;
+    display: flex;
+    flex-wrap: wrap;
+    display: none;
+}
+
+.submenu li {
+    width: 55px;
+    padding: 10px 20px;
+}
+
+
+/*.category:hover .submenu {
+    display: flex;
+}*/
