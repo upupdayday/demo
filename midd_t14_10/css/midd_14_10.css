@@ -24,14 +24,11 @@ a {
 }
 
 .title {
-    color:
+    color: #666;
 }
 
 .panel {
-    display: none;
-}
-
-.panel.active {
+    /* display: none; */
     display: block;
 }
 
@@ -41,16 +38,27 @@ a {
     justify-content: space-between;
     align-content: space-between;
     width: 702px;
-    height: 442px;
     border: 1px solid #eee;
+    /*方法一：products_ct设高度，每添加一次，增加一次Product的高度和margin，20px
+    height: 442px;*/
 }
 
 .product {
     position: relative;
     width: 220px;
-    /* margin-top: 20px; */
     padding: 10px 20px;
     border: 1px solid #eee;
+    /*方法二：products_ct不设高度，Product设margin-top,前三个li不设margin-top*/
+    margin-top: 20px;
+}
+
+
+/*方法二：products_ct不设高度，Product设margin-top,前三个li不设margin-top*/
+
+.product:nth-child(1),
+.product:nth-child(2),
+.product:nth-child(3) {
+    margin-top: 0;
 }
 
 .product .cover {
@@ -92,4 +100,14 @@ a {
 
 .product .content .price {
     color: #c81623;
+}
+
+#loadMore {
+    display: inline-block;
+    background: #fff;
+    color: #c81623;
+    border: 1px solid #c81623;
+    border-radius: 3px;
+    padding: 10px 15px;
+    margin-top: 20px;
 }
