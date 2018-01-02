@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        .ct {
+            margin: 10px;
+        }
+        
+        .box {
+            margin: 5px 0;
+        }
+        
+        .dis {
+            margin: 10px;
+            /* padding: 5px; */
+            width: 300px;
+            /* height: 300px; */
+            border: 1px solid blue;
+        }
+        
+        .wrap {
+            margin: 5px 0;
+            position: relative;
+            padding: 5px;
+            /* border: 1px solid black; */
+        }
+        
+        span {
+            position: absolute;
+            display: inline-block;
+            width: 200px;
+            height: 25px;
+            left: 60px;
+            /* margin-left: 20px; */
+            border-bottom: 1px solid green;
+            color: blue;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="ct">
+            <form action="get">
+                <div class="box">
+                    <label>颜色：</label>
+                    <input type="radio" id='blue' name='color' value='blue'>
+                    <label for="blue">蓝色</label>
+                    <input type="radio" id='orange' name='color' value='orange'>
+                    <label for="orange">橙色</label>
+                    <input type="radio" id='green' name='color' value='green'>
+                    <label for="green">绿色</label>
+                </div>
+                <div class="box">
+                    <label>爱好：</label>
+                    <input type="checkbox" id='reading' name='hobby' value='reading'>
+                    <label for="blue">读书</label>
+                    <input type="checkbox" id='music' name='hobby' value='music'>
+                    <label for="music">音乐</label>
+                    <input type="checkbox" id="movie" name="hobby" value="movie">
+                    <label for="movie">电影</label>
+                </div <div class="multi">
+                <div class="box">
+                    <label for="">城市：</label>
+                    <select name="" id="">
+                                <option value="beijing">北京</option>
+                                <option value="shanghai", selected='selected'>上海</option>
+                                <option value="hangzhou">杭州</option>
+                            </select>
+                </div>
+            </form>
+        </div>
+
+        <div class="dis">
+            <div class="wrap">
+                <label for="radi">radio:</label>
+                <span id="radi"></span>
+            </div>
+            <div class="wrap">
+                <label for="check">check:</label>
+                <span id="check"></span>
+            </div>
+            <div class="wrap">
+                <label for="sele">select:</label>
+                <span id="sele"></span>
+            </div>
+        </div>
+    </div>
+
+    <script src="//code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script>
+        $('.box input').change(function() {
+            var $this = $(this)
+            var $box = $this.parent('.box')
+            var index = $box.index()
+            var obj_checked = $box.find('input:checked')
+            var num = obj_checked.length
+            var node_text = ''
+            for (var i = 0; i < num; i++) {
+                if (i === num - 1) {
+                    node_text += obj_checked[i].value
+                } else {
+                    node_text += obj_checked[i].value + '+'
+                }
+            }
+
+            var $node_span = $box.parents('.container').find('.dis>.wrap').eq(index).find('span')
+            $node_span.text(node_text)
+        })
+
+        $('.box select').change(function() {
+            var $this = $(this)
+            var $box = $this.parent('.box')
+            var index = $box.index()
+            var obj_checked = $box.find('option:checked')
+            var num = obj_checked.length
+            var node_text = ''
+            for (var i = 0; i < num; i++) {
+                if (i === num - 1) {
+                    node_text += obj_checked[i].value
+                } else {
+                    node_text += obj_checked[i].value + '+'
+                }
+            }
+
+            var $node_span = $box.parents('.container').find('.dis>.wrap').eq(index).find('span')
+            $node_span.text(node_text)
+        })
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        .ct {
+            width: 200px;
+            height: 100px;
+            border: 1px solid black;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="ct">
+        <p>鼠标移入移出改变背景颜色</p>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-2.2.4.js" integrity="sha256-iT6Q9iMJYuQiMWNd9lDyBUStIq/8PuOW33aOqmvFpqI=" crossorigin="anonymous"></script>
+    <script>
+        $('.ct').mouseenter(function() {
+            $(this).css('background', 'red')
+        })
+
+        $('.ct').mouseleave(function() {
+            $(this).css('background', 'white')
+        })
+    </script>
+</body>
+
+</html>

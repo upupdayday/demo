@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        .btn {
+            display: inline-block;
+            width: 100px;
+            height: 30px;
+            border: 1px solid black;
+            list-style: none;
+            background: white;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="ct1">
+        <ul>
+            <li id="foo">foo</li>
+            <li id="bar">bar</li>
+            <li id="baz">baz</li>
+        </ul>
+        <button class='btn'>点我</button>
+    </div>
+    <div class="ct2">
+        <ul>
+            <li id="foo">foo</li>
+            <li id="bar">bar</li>
+            <li id="baz">baz</li>
+        </ul>
+        <button class='btn'>点我</button>
+    </div>
+    <script src="https://code.jquery.com/jquery-2.2.4.js" integrity="sha256-iT6Q9iMJYuQiMWNd9lDyBUStIq/8PuOW33aOqmvFpqI=" crossorigin="anonymous"></script>
+    <!-- <script type="text/javascript" src="jquery.color.js"></script> -->
+    <script src="https://code.jquery.com/color/jquery.color-2.1.2.js"></script>
+    <script>
+        /*方法一：用setTimeout*/
+        $('.ct1>.btn').on('click', function() {
+            var $this = $(this);
+            $this.css('background', 'red');
+            setTimeout(function() {
+                $this.css('background', 'blue')
+            }, 500)
+        })
+
+        /*方法二：用jQuery背景颜色插件*/
+        $('.ct2>.btn').on('click', function() {
+            // var $this = $(this);
+            console.log('111')
+            $(this).animate({
+                backgroundColor: 'red'
+            }, 500)
+            console.log('222')
+            $(this).animate({
+                backgroundColor: 'blue'
+            }, 500)
+        })
+    </script>
+</body>
+
+</html>

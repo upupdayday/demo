@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        .ct {
+            width: 300px;
+            height: 100px;
+            overflow: scroll;
+            margin: 10px;
+            padding: 5px;
+            border: 2px solid #666;
+        }
+        
+        .dis {
+            width: 300px;
+            margin: 10px;
+            border: 1px solid black;
+        }
+        
+        button {
+            margin: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="ct">
+        <p>Hello</p>
+        <p>Hello</p>
+        <p>Hello</p>
+        <p>Hello</p>
+    </div>
+    <div class="dis">
+        <h4>滑动滑条，点击获取距离</h4>
+        <p>scrollTop:</p>
+
+    </div>
+    <button>点击获取</button>
+
+    <script src="http://code.jquery.com/jquery-latest.js"></script>
+    <script>
+        $st = $('.ct').scrollTop();
+        $('button').on('click', function() {
+            var $text = 'scrollTop:'
+            console.log($text)
+            var num = $('.ct').scrollTop()
+            console.log(num)
+            console.log(num.toFixed(2))
+
+            var result = parseFloat(num.toFixed(2))
+            $(".dis p").text($text + result + 'px')
+        })
+    </script>
+</body>
+
+</html>
