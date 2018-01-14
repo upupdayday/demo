@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <style>
+        ul,
+        li {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+        
+        a {
+            text-decoration: none;
+        }
+        
+        .win {
+            position: relative;
+            width: 320px;
+            height: 180px;
+            overflow: hidden;
+        }
+        
+        .ct {
+            position: absolute;
+        }
+        
+        .clearfix:after {
+            content: '';
+            display: block;
+            clear: both;
+        }
+        
+        .ct li {
+            float: left;
+        }
+        
+        .ct li a img {
+            width: 320px;
+            height: 180px;
+        }
+        
+        .pre,
+        .next {
+            top: 50%;
+            margin-top: -15px;
+            width: 30px;
+            height: 30px;
+            line-height: 30px;
+            position: absolute;
+            font-size: 15px;
+            text-align: center;
+            color: #fff;
+            border: 1px solid #fff;
+            border-radius: 50%;
+            background: #555;
+            opacity: 0.7;
+            z-index: 1;
+        }
+        
+        .pre:hover,
+        .next:hover {
+            opacity: 1;
+        }
+        
+        .pre {
+            left: 15px;
+        }
+        
+        .next {
+            right: 15px;
+        }
+        
+        .menu {
+            position: absolute;
+            bottom: 15px;
+            width: 100%;
+            font-size: 0;
+            text-align: center;
+            z-index: 1;
+        }
+        
+        .menu li {
+            display: inline-block;
+            width: 28px;
+            height: 7px;
+            margin: 0 5px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        
+        .menu li.active {
+            background: #ede;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="win">
+        <ul class="ct clearfix">
+            <li>
+                <a href="#"><img src="http://cdn.jirengu.com/book.jirengu.com/img/2.jpg" alt=""></a>
+            </li>
+            <li>
+                <a href="#"><img src="http://cdn.jirengu.com/book.jirengu.com/img/3.jpg" alt=""></a>
+            </li>
+            <li>
+                <a href="#"><img src="http://cdn.jirengu.com/book.jirengu.com/img/4.jpg" alt=""></a>
+            </li>
+            <li>
+                <a href="#"><img src="http://cdn.jirengu.com/book.jirengu.com/img/5.jpg" alt=""></a>
+            </li>
+        </ul>
+        <a class="pre" href="#">
+            <</a>
+                <a class="next" href="#">></a>
+                <ul class="menu">
+                    <li class="active"></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                </ul>
+    </div>
+    <script>
+        var $imgCt = $('.ct')
+        var $imgs = $('.ct>li')
+        var imgWidth = $('.ct li>a img').width()
+        var imgCount = $imgs.length
+        var $menu = $('.menu')
+        var $page = $('.menu>li')
+        var $playPre = $('.pre')
+        var $playNext = $('.next')
+        var imgIndex = 0
+        var isAnimate = false
+
+        $imgCt.append($imgs.first().clone())
+        $imgCt.prepend($imgs.last().clone())
+        $imgCt.width((imgCount + 2) * imgWidth)
+        $imgCt.css({
+            left: -imgWidth
+        })
+
+        /*使用事件代理，在menu上绑定事件*/
+        $menu.on('click', function(e) {
+            menuSelect(e)
+        })
+
+        $playNext.on('click', function() {
+            playNext(1)
+        })
+
+        $playPre.on('click', function() {
+            playPre(1)
+        })
+
+
+        function menuSelect(event) {
+            var target = event.target
+                /*确认点击在li上*/
+            if (target.tagName.toLowerCase() === 'li') {
+                /*原生JS对象用$包裹，转为jquery对象*/
+                var $target = $(target)
+                var cur = $target.index()
+                if (cur < imgIndex) {
+                    playPre(imgIndex - cur)
+
+                } else if (cur > imgIndex) {
+                    playNext(cur - imgIndex)
+                }
+            }
+        }
+
+        function playNext(len) {
+            if (isAnimate) {
+                return
+            }
+            isAnimate = true
+
+            $imgCt.animate({
+                    left: '-=' + imgWidth * len
+                }, function() {
+                    imgIndex += len
+                    if (imgIndex === imgCount) {
+                        $imgCt.css({
+                            left: -imgWidth
+                        })
+                        imgIndex = 0
+                    }
+
+                    setPage(imgIndex)
+                    isAnimate = false /*解锁需要在函数中*/
+                })
+                /*如在此处解锁，那回调函数没执行完就解锁了，没有起到限制作用*/
+                /*isAnimate = false*/
+        }
+
+        function playPre(len) {
+            if (isAnimate) {
+                return
+            }
+            isAnimate = true
+
+            $imgCt.animate({
+                left: '+=' + imgWidth * len
+            }, function() {
+                imgIndex -= len
+                if (imgIndex < 0) {
+                    $imgCt.css({
+                        left: -imgWidth * imgCount
+                    })
+                    imgIndex = imgCount - 1
+                }
+
+                setPage(imgIndex)
+                isAnimate = false
+            })
+        }
+
+        function setPage(index) {
+            $page.removeClass('active')
+                .eq(index).addClass('active')
+        }
+    </script>
+</body>
+
+</html>
