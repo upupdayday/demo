@@ -57,6 +57,10 @@
     <script>
         waterFall()
 
+        $(window).resize(function() {
+            waterFall()
+        })
+
         function waterFall() {
             var itemArr = []
             var length = parseInt($('.content').width() / $('.item').width())
