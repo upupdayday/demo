@@ -11,11 +11,10 @@
         body,
         ul,
         li,
-        p,
-        div {
+        div,
+        p {
             margin: 0;
             padding: 0;
-            box-sizing: border-box;
         }
         
         ul,
@@ -24,7 +23,7 @@
         }
         
         .wrap {
-            width: 900px;
+            width: 700px;
             margin: 0 auto;
         }
         
@@ -34,40 +33,40 @@
             clear: both;
         }
         
-        .ct_img {
-            position: relative;
-        }
-        
         .item {
-            position: absolute;
+            /* position: absolute; */
             margin: 10px;
             padding: 0 0 10px 0;
-            width: 280px;
+            width: 100%;
             border: 1px solid #dfdfdf;
             background: #fff;
             /* opacity: 0; */
             transition: all .8s
         }
         
-        .item img {
-            margin: 10px;
-            width: 260px;
+        .item>a {
+            float: left;
+        }
+        
+        .item>a img {
+            margin: 0 10px;
+            width: 230px;
         }
         
         .item .header {
             height: 25px;
-            margin: 0 12px;
+            /* margin: 0 12px; */
             border-bottom: 1px solid #DBDBDB;
         }
         
         .item .detail {
-            margin: 10px 15px 0;
+            /* margin: 10px 15px 0; */
             line-height: 1.8;
-            font-size: 12px;
+            /* font-size: 12px; */
             color: #777371;
         }
         
-        #load {
+        .load {
             visibility: hidden;
             height: 20px;
             /* border: 1px solid red; */
@@ -77,63 +76,45 @@
             display: none;
         }
     </style>
-
 </head>
 
 <body>
     <div class="wrap">
-        <div class="ct_waterfall">
-            <ul class="ct_img clearfix">
-                <!-- <li class="item">
+        <div class="ct_news">
+            <ul class="ct_img">
+                <li class="item clearfix">
                     <a href="#">
                         <img src="http://s.img.mix.sina.com.cn/auto/resize?img=http%3A%2F%2Fwww.sinaimg.cn%2Fdy%2Fslidenews%2F5_img%2F2016_09%2F453_75615_657883.jpg&size=250_0" alt="">
                     </a>
                     <h4 class="header">新闻题目</h4>
                     <p class="detail">当地时间2016年3月1日，在东部与亲俄武装作战中受伤的乌克兰士兵接受海豚治疗。</p>
-                </li> -->
-
-
-                <!-- 用于计算 item 宽度和列数，但不展示出来 -->
+                </li>
                 <li class="item hide"></li>
             </ul>
-            <div id="load">我是看不见的</div>
+            <div class="load">看不见</div>
         </div>
     </div>
     <script src="https://apps.bdimg.com/libs/jquery/1.9.1/jquery.min.js"></script>
     <script>
         var curPage = 1;
         var perPageCount = 10;
-        var nodeWidth = $('.item').outerWidth(true)
-        var colNum = parseInt($('.ct_img').width() / nodeWidth)
-        var colArr = []
-
         var isDataArrive = true
 
-        for (i = 0; i < colNum; i++) {
-            colArr.push(0)
-        }
-
         start()
+
         $(window).scroll(function() {
-            if (!isDataArrive)
-                return
-            if (isDataArrive) {
-                if (isVisible($('#load'))) {
-                    start()
-                }
+            if (!isDataArrive) return
+            if (isVisible($('.load'))) {
+                start()
             }
         })
 
         function start() {
-
             getData(function(newsList) {
                 isDataArrive = true
-                $.each(newsList, function(index, news) {
-                    var $node = getNode(news)
-                    $node.find('img').load(function() {
-                        $('.ct_img').append($node)
-                        waterFall($node)
-                    })
+                $.each(newsList, function(idx, news) {
+                    $node = getNode(news)
+                    $('.ct_img').append($node)
                 })
             })
             isDataArrive = false
@@ -161,8 +142,8 @@
 
         function getNode(node) {
             var temp = ''
-            temp += '<li class="item">'
-            temp += '<a href="' + node.url + '" class="link">' + '<img src="' + node.img_url + '" alt="">' + '</a>'
+            temp += '<li class="item clearfix">'
+            temp += '<a href="' + node.url + '" class="link">' + '<img src="' + node.img_url + '" alt=""></a>'
             temp += '<h4 class="header">' + node.short_name + '</h4>'
             temp += '<p class="detail">' + node.short_intro + '</p>'
             temp += '</li>'
@@ -170,29 +151,19 @@
             return $(temp)
         }
 
-        function waterFall($node) {
-            var minHeight = Math.min.apply(null, colArr)
-            var minIdx = colArr.indexOf(minHeight)
-            $node.css({
-                left: minIdx * nodeWidth,
-                top: minHeight
-            })
-            colArr[minIdx] += $node.outerHeight(true)
-                /*item都是绝对定位，脱离文档流，所以要每次讲ct_img的高度设为每列的最大值，撑开容器*/
-            $('.ct_img').height(Math.max.apply(null, colArr))
-        }
-
         function isVisible($node) {
-            var windowHeight = $(window).height()
-            var offsetTop = $node.offset().top
+            var offset = $node.offset().top
+            var winHeight = $(window).height()
             var scrollTop = $(window).scrollTop()
-            if (windowHeight + scrollTop > offsetTop) {
+
+            if (offset < winHeight + scrollTop) {
                 return true
-            } else {
-                return false
             }
+
+            return false
         }
     </script>
+
 </body>
 
 </html>
