@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        html,
+        body,
+        ul,
+        li,
+        p,
+        div {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        ul,
+        li {
+            list-style: none;
+        }
+        
+        .wrap {
+            width: 900px;
+            margin: 0 auto;
+        }
+        
+        .clearfix:after {
+            content: '';
+            display: block;
+            clear: both;
+        }
+        
+        .ct_img {
+            position: relative;
+        }
+        
+        .item {
+            position: absolute;
+            margin: 10px;
+            padding: 0 0 10px 0;
+            width: 280px;
+            border: 1px solid #dfdfdf;
+            background: #fff;
+            /* opacity: 0; */
+            transition: all .8s
+        }
+        
+        .item img {
+            margin: 10px;
+            width: 260px;
+        }
+        
+        .item .header {
+            height: 25px;
+            margin: 0 12px;
+            border-bottom: 1px solid #DBDBDB;
+        }
+        
+        .item .detail {
+            margin: 10px 15px 0;
+            line-height: 1.8;
+            font-size: 12px;
+            color: #777371;
+        }
+        
+        #load {
+            /* visibility: hidden; */
+            height: 20px;
+            border: 1px solid red;
+        }
+        
+        .hide {
+            display: none;
+        }
+    </style>
+
+</head>
+
+<body>
+    <div class="wrap">
+        <div class="ct_waterfall">
+            <ul class="ct_img clearfix">
+                <li class="item">
+                    <a href="#">
+                        <img src="http://s.img.mix.sina.com.cn/auto/resize?img=http%3A%2F%2Fwww.sinaimg.cn%2Fdy%2Fslidenews%2F5_img%2F2016_09%2F453_75615_657883.jpg&size=250_0" alt="">
+                    </a>
+                    <h4 class="header">新闻题目</h4>
+                    <p class="detail">当地时间2016年3月1日，在东部与亲俄武装作战中受伤的乌克兰士兵接受海豚治疗。</p>
+                </li>
+
+
+                <!-- 用于计算 item 宽度和列数，但不展示出来-->
+                <!-- <li class="item hide"></li> -->
+            </ul>
+            <div id="load">我是看不见的</div>
+        </div>
+    </div>
+    <script src="http://apps.bdimg.com/libs/jquery/1.9.1/jquery.min.js"></script>
+    <!-- <script>
+        var curPage = 1;
+        var perPageCount = 10;
+        var nodeWidth = $('.item').outerWidth(true)
+        var colNum = parseInt($('.ct_img').width() / nodeWidth)
+        var colArr = []
+
+        var isDataArrive = true
+
+        for (i = 0; i < colNum; i++) {
+            colArr.push(0)
+        }
+
+        start()
+            // $(window).scroll(function() {
+            //     if (!isDataArrive)
+            //         return
+            //     if (isDataArrive) {
+            //         console.log('111')
+            //         if (isVisible($('#load'))) {
+            //             console.log('111')
+            //             start()
+            //         }
+            //     }
+            // })
+
+        function start() {
+
+            getData(function(newsList) {
+                isDataArrive = true
+                $.each(newsList, function(index, news) {
+                    var $node = getNode(news)
+                    $node.find('img').load(function() {
+                        $('.ct_img').append($node)
+                        waterFall($node)
+                    })
+                })
+            })
+            isDataArrive = false
+        }
+
+        function getData(callback) {
+            $.ajax({
+                url: 'http://platform.sina.com.cn/slide/album_tech',
+                dataType: 'jsonp',
+                jsonp: "jsoncallback",
+                data: {
+                    app_key: '1271687855',
+                    num: perPageCount,
+                    page: curPage
+                }
+            }).done(function(ret) {
+                if (ret && ret.status && ret.status.code === "0") {
+                    callback(ret.data)
+                    curPage++;
+                } else {
+                    console.log("errors")
+                }
+            })
+        }
+
+        function getNode(node) {
+            var temp = ''
+            temp += '<li class="item">'
+            temp += '<a href="' + node.url + '" class="link">' + '<img src="' + node.img_url + '" alt="">' + '</a>'
+            temp += '<h4 class="header">' + node.short_name + '</h4>'
+            temp += '<p class="detail">' + node.short_intro + '</p>'
+            temp += '</li>'
+
+            return $(temp)
+        }
+
+        function waterFall($node) {
+            var minHeight = Math.min.apply(null, colArr)
+            var minIdx = colArr.indexOf(minHeight)
+            $node.css({
+                left: minIdx * nodeWidth,
+                top: minHeight
+            })
+            colArr[minIdx] += $node.outerHeight(true)
+        }
+
+        function isVisible($node) {
+            var windowHeight = $(window).height()
+            var offsetTop = $node.offset().top
+            var scrollTop = $(window).scrollTop()
+            console.log('win:' + windowHeight)
+            console.log('scroll:' + scrollTop)
+            console.log('offsetTop:' + offsetTop)
+            if (windowHeight + scrollTop > offsetTop) {
+                return true
+            } else {
+                return false
+            }
+        }
+    </script> -->
+</body>
+
+</html>

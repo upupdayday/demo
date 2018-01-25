@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        .content {
+            position: relative;
+        }
+        
+        .item {
+            position: absolute;
+            width: 200px;
+            margin-top: 10px;
+            margin-right: 10px;
+            transition: all 1s;
+        }
+        
+        .h1 {
+            height: 200px;
+            background-color: #f4b300;
+        }
+        
+        .h2 {
+            height: 300px;
+            background-color: #691BB8;
+        }
+        
+        .h3 {
+            height: 400px;
+            background-color: #006ac1;
+        }
+    </style>
+    <script src="https://apps.bdimg.com/libs/jquery/1.9.1/jquery.min.js"></script>
+</head>
+
+<body>
+    <div class="content">
+        <div class="item h1">1</div>
+        <div class="item h3">2</div>
+        <div class="item h2">3</div>
+        <div class="item h1">4</div>
+        <div class="item h2">5</div>
+        <div class="item h3">6</div>
+        <div class="item h3">7</div>
+        <div class="item h2">8</div>
+        <div class="item h1">9</div>
+        <div class="item h2">10</div>
+        <div class="item h1">11</div>
+        <div class="item h3">12</div>
+        <div class="item h2">13</div>
+        <div class="item h1">14</div>
+    </div>
+    <script>
+        waterFall()
+
+        function waterFall() {
+            var itemArr = []
+            var length = parseInt($('.content').width() / $('.item').width())
+            for (i = 0; i < length; i++) {
+                itemArr[i] = 0
+            }
+
+            $('.item').each(function() {
+                var minHeight = Math.min.apply(null, itemArr)
+                var minIdx = itemArr.indexOf(minHeight)
+                var curItemWidth = $(this).outerWidth(true)
+                var curItemHeight = $(this).outerHeight(true)
+
+                $(this).css({
+                    top: minHeight,
+                    left: curItemWidth * minIdx
+                })
+
+                itemArr[minIdx] += curItemHeight
+
+            })
+            console.log(itemArr)
+        }
+    </script>
+</body>
+
+</html>
