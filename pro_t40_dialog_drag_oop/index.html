@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        .dialog .dialog-overlay {
+            width: 100%;
+            height: 100%;
+            background-color: #000;
+            opacity: 0.5;
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 3000;
+        }
+        
+        .dialog {
+            position: absolute;
+            width: 350px;
+            background: #eee;
+            font-size: 14px;
+            padding-bottom: 10px;
+            border-radius: 5px;
+            margin-left: -175px;
+            position: absolute;
+            top: 30%;
+            left: 50%;
+            z-index: 5000;
+            box-shadow: 0px 0px 5px 2px rgba(0, 0, 0, 0.5);
+        }
+        
+        .dialog .dialog-header {
+            background-color: #676666;
+            color: #fff;
+            padding: 10px 18px;
+            border-radius: 5px 5px 0 0;
+        }
+        
+        .dialog .dialog-header h3 {
+            margin: 0;
+            /* font-size: 14px; */
+        }
+        
+        .dialog .dialog-header .btn-close {
+            position: absolute;
+            right: 10px;
+            top: 10px;
+            cursor: pointer;
+        }
+        
+        .dialog .dialog-content {
+            margin: 10px;
+            padding: 10px;
+            font-size: 12px;
+            color: #666;
+        }
+        
+        .dialog .dialog-footer {
+            text-align: center;
+        }
+        
+        a.btn {
+            display: inline-block;
+            text-decoration: none;
+            text-align: center;
+            width: 50px;
+            background-color: #e33100;
+            color: #fff;
+            border-radius: 3px;
+            padding: 5px 0;
+        }
+        
+        a.btn:hover {
+            background-color: #c03100;
+        }
+        
+        .draggable {
+            opacity: 0.8;
+            cursor: move;
+        }
+    </style>
+</head>
+
+<body>
+    <button id="open1"> 打开1</button>
+    <button id="open2"> 打开2</button>
+    <button id="open3"> 打开3</button>
+    <button id="open4"> 打开4</button>
+    <button id="open5"> 打开5</button>
+    <p>可打开多个，并拖动弹窗</p>
+    <!-- <div class="dialog">
+        <div class="dialog-overlay"></div>
+        <div class="dialog-box">
+            <div class="dialog-header">
+                <h3>hello world</h3><span class="btn-close">x</span>
+            </div>
+            <div class="dialog-content">
+                hello world
+            </div>
+            <div class="dialog-footer">
+                <a href="#" class="btn btn-close">取消</a>
+                <a href="#" class="btn btn-confirm">确定</a>
+            </div>
+        </div>
+    </div> -->
+    <script src="http://apps.bdimg.com/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script>
+        function DialogCtor() {
+            this.createDialog();
+            this.bind();
+        }
+
+        DialogCtor.prototype = {
+            defaultOpt: {
+                titile: "",
+                message: "",
+                isShowCloseBtn: true,
+                isShowConfirmBtn: false,
+                onClose: function() {},
+                onConfirm: function() {}
+            },
+
+            showDialog: function() {
+                this.$diag.show();
+            },
+
+            hideDialog: function() {
+                this.$diag.hide();
+            },
+
+            destroyDialog: function() {
+                this.$diag.remove();
+            },
+
+            setOpt: function(opt) {
+                if (typeof opt === 'string') {
+                    this.opt = $.extend({}, this.defaultOpt, {
+                        message: opt
+                    });
+                } else if (typeof opt === 'object') {
+                    this.opt = $.extend({}, this.defaultOpt, opt);
+                }
+            },
+
+            setDialog: function() {
+                let $diag = this.$diag;
+                if (!this.opt.title) {
+                    $diag.find('.dialog-header').hide();
+                } else {
+                    $diag.find('.dialog-header').show();
+                }
+
+                if (!this.opt.isShowCloseBtn) {
+                    $diag.find('.dialog-footer .btn-close').hide();
+                } else {
+                    $diag.find('.dialog-footer .btn-close').show();
+                }
+
+                if (!this.opt.isShowConfirmBtn) {
+                    $diag.find('.btn-confirm').hide();
+                } else {
+                    $diag.find('.btn-confirm').show();
+                }
+
+                $diag.find('.dialog-header h3').text(this.opt.title);
+                $diag.find('.dialog-content').html(this.opt.message);
+            },
+
+            createDialog: function() {
+                let tmp = '<div class="dialog" style="display:none">' +
+                    '<div class="dialog-box">' +
+                    '<div class="dialog-header"><h3></h3><span class="btn-close">x</span></div>' +
+                    '<div class="dialog-content">' +
+                    '</div>' +
+                    '<div class="dialog-footer">' +
+                    '  <a href="#" class="btn btn-close">取消</a>' +
+                    '  <a href="#" class="btn btn-confirm">确定</a>' +
+                    '</div>' +
+                    '</div>' +
+                    '</div>';
+                this.$diag = $(tmp);
+                $('body').append(this.$diag);
+            },
+
+            bind: function() {
+                let _this = this;
+
+                _this.$diag.find('.btn-close').on('click', function(e) {
+                    //e.preventDefault();
+                    _this.opt.onClose();
+                    _this.hideDialog();
+                    _this.destroyDialog();
+                });
+
+                _this.$diag.find('.btn-confirm').on('click', function(e) {
+                    // e.preventDefault();
+                    _this.opt.onConfirm();
+                    _this.hideDialog();
+                    _this.destroyDialog();
+                });
+
+                _this.$diag.on('mousedown', function(e) {
+                    /*e.pageX:事件在页面上的绝对位置*/
+                    /*$dialog.offset() dialog在页面的绝对位置*/
+                    let $curDialog = $(this),
+                        evtX = e.pageX - $curDialog.offset().left, //evtX 计算事件的触发点在 dialog内部到 dialog 的左边缘的距离
+                        evtY = e.pageY - $curDialog.offset().top;
+
+                    $curDialog.addClass('draggable').data('evtPos', {
+                        x: evtX,
+                        y: evtY
+                    })
+                });
+
+                $('body').on('mousemove', function(e) {
+                    if ($('.draggable').length && $('.draggable').offset()) {
+                        $('.draggable').offset({
+                            left: e.pageX - $('.draggable').data('evtPos').x, // 当用户鼠标移动时，根据鼠标的位置和前面保存的距离，计算 dialog 的绝对位置
+                            top: e.pageY - $('.draggable').data('evtPos').y
+                        })
+                    }
+                });
+
+                $('body').on('mouseup', function() {
+                    $('.draggable').length && $('.draggable').removeClass('draggable').removeData('evtPos');
+                })
+
+            },
+
+            open: function(opt) {
+                this.setOpt(opt);
+                this.setDialog();
+                this.showDialog();
+            }
+        }
+
+
+        $('#open1').on('click', function() {
+            let Diag = new DialogCtor();
+            Diag.open('hello, world');
+        });
+
+        $('#open2').on('click', function() {
+            let Diag = new DialogCtor();
+            Diag.open('<a href="https://www.baidu.com">search the world</a>');
+        });
+
+        $('#open3').on('click', function() {
+            let Diag = new DialogCtor();
+            Diag.open({
+                title: 'Welcom to Earth',
+                message: 'hello world',
+                isShowCloseBtn: true,
+                isShowConfirmBtn: true,
+                onClose: function() {
+                    alert('close')
+                },
+                onConfirm: function() {
+                    alert('确定');
+                }
+            });
+        });
+
+        var tpl = '<ul><li>列表1</li><li>列表2</li><li>列表1</li><li>列表1</li></ul>';
+        $('#open4').on('click', function() {
+            let Diag = new DialogCtor();
+            Diag.open({
+                title: 'Welcom to Earth',
+                message: tpl,
+                isShowCloseBtn: true,
+                isShowConfirmBtn: true,
+                onClose: function() {
+                    alert('close')
+                },
+                onConfirm: function() {
+                    alert('确定');
+                }
+            });
+        });
+        $('#open5').on('click', function() {
+            let Diag = new DialogCtor();
+            Diag.open({
+                title: 'Welcom to Earth',
+                message: 'hello world',
+                isShowCloseBtn: false,
+                isShowConfirmBtn: false
+            });
+        });
+    </script>
+</body>
+
+</html>

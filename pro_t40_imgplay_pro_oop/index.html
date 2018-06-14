@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        ul,
+        li {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+        
+        a {
+            text-decoration: none;
+        }
+        
+        .mod {
+            position: relative;
+            width: 320px;
+            height: 180px;
+            overflow: hidden;
+        }
+        
+        .img_ct {
+            /*position: absolute;*/
+            /*为li绝对定位做参考，且不再移动css，不用absolute*/
+            position: relative;
+        }
+        
+        .clearfix:after {
+            content: '';
+            display: block;
+            clear: both;
+        }
+        
+        .img_ct li {
+            /*float: left;*/
+            /*使用绝对定位，让所有图片脱离文档流，全都叠放在一起，都位于窗口位置*/
+            position: absolute;
+            display: none;
+        }
+        
+        .img_ct li a img {
+            width: 320px;
+            height: 180px;
+        }
+        
+        .pre,
+        .next {
+            top: 50%;
+            margin-top: -15px;
+            width: 30px;
+            height: 30px;
+            line-height: 30px;
+            position: absolute;
+            font-size: 15px;
+            text-align: center;
+            color: #fff;
+            border: 1px solid #fff;
+            border-radius: 50%;
+            background: #555;
+            opacity: 0.7;
+            z-index: 1;
+        }
+        
+        .pre:hover,
+        .next:hover {
+            opacity: 1;
+        }
+        
+        .pre {
+            left: 15px;
+        }
+        
+        .next {
+            right: 15px;
+        }
+        
+        .menu {
+            position: absolute;
+            bottom: 15px;
+            width: 100%;
+            font-size: 0;
+            text-align: center;
+            z-index: 1;
+        }
+        
+        .menu li {
+            display: inline-block;
+            width: 28px;
+            height: 7px;
+            margin: 0 5px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        
+        .menu li.active {
+            background: #ede;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="mod">
+        <ul class="img_ct">
+            <li>
+                <a href="#"><img src="http://cdn.jirengu.com/book.jirengu.com/img/2.jpg" alt=""></a>
+            </li>
+            <li>
+                <a href="#"><img src="http://cdn.jirengu.com/book.jirengu.com/img/3.jpg" alt=""></a>
+            </li>
+            <li>
+                <a href="#"><img src="http://cdn.jirengu.com/book.jirengu.com/img/4.jpg" alt=""></a>
+            </li>
+            <li>
+                <a href="#"><img src="http://cdn.jirengu.com/book.jirengu.com/img/5.jpg" alt=""></a>
+            </li>
+        </ul>
+        <a href="#" class="pre">
+            <</a>
+                <a href="#" class="next">></a>
+                <ul class="menu">
+                    <li class="active"></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                </ul>
+    </div>
+    <div class="mod">
+        <ul class="img_ct">
+            <li>
+                <a href="#"><img src="http://cdn.jirengu.com/book.jirengu.com/img/2.jpg" alt=""></a>
+            </li>
+            <li>
+                <a href="#"><img src="http://cdn.jirengu.com/book.jirengu.com/img/3.jpg" alt=""></a>
+            </li>
+            <li>
+                <a href="#"><img src="http://cdn.jirengu.com/book.jirengu.com/img/4.jpg" alt=""></a>
+            </li>
+            <li>
+                <a href="#"><img src="http://cdn.jirengu.com/book.jirengu.com/img/5.jpg" alt=""></a>
+            </li>
+        </ul>
+        <a href="#" class="pre">
+            <</a>
+                <a href="#" class="next">></a>
+                <ul class="menu">
+                    <li class="active"></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                </ul>
+    </div>
+    <script type="text/javascript" src="https://apps.bdimg.com/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script>
+        // var __nativeST__ = window.setTimeout,
+        //     __nativeSI__ = window.setInterval;
+        // window.setInterval = function(vCallback, nDelay /*, argumentToPass1, argumentToPass2, etc. */ ) {
+        //     var oThis = this,
+        //         aArgs = Array.prototype.slice.call(arguments, 2);
+        //     return __nativeSI__(vCallback instanceof Function ? function() {
+        //         vCallback.apply(oThis, aArgs);
+        //     } : vCallback, nDelay);
+        // };
+
+        function imgPlay($mod) {
+            this.$mod = $mod;
+            this.init();
+            this.bind();
+            this.play(0);
+            this.autoPlay();
+        }
+
+        imgPlay.prototype.init = function() {
+            this.$img_ct = this.$mod.find('.img_ct');
+            this.$imgs = this.$mod.find('.img_ct>li');
+            this.$playPre = this.$mod.find('.pre');
+            this.$playNext = this.$mod.find('.next');
+            this.$menu = this.$mod.find('.menu');
+            this.$pages = this.$mod.find('.menu>li');
+            this.imgCount = this.$imgs.length;
+            this.curIdx = 0;
+            this.isAnimate = false;
+        }
+
+        imgPlay.prototype.bind = function() {
+            let _this = this;
+            this.$playPre.on('click', function() {
+                _this.playPre();
+            })
+            this.$playNext.on('click', function() {
+                _this.playNext();
+            })
+            this.$menu.on('click', function(e) {
+                _this.menuSelect(e);
+            })
+        }
+
+        imgPlay.prototype.menuSelect = function() {
+            let target = event.target,
+                _this = this;
+            /*确认点击在li上*/
+            if (target.tagName.toLowerCase() === 'li') {
+                /*原生JS对象用$包裹，转为jquery对象*/
+                let $target = $(target)
+                let cur = $target.index()
+                _this.play(cur)
+            }
+        }
+
+        imgPlay.prototype.play = function play(idx) {
+            let _this = this;
+            if (_this.isAnimate) return;
+            _this.isAnimate = true;
+            _this.$imgs.eq(_this.curIdx).fadeOut(500);
+            _this.$imgs.eq(idx).fadeIn(500, function() {
+                _this.isAnimate = false;
+            });
+            _this.curIdx = idx;
+            _this.setPage();
+        }
+
+        imgPlay.prototype.setPage = function() {
+            this.$pages.removeClass('active')
+                .eq(this.curIdx).addClass('active')
+        }
+
+        imgPlay.prototype.playPre = function() {
+            this.play((this.imgCount + this.curIdx - 1) % this.imgCount);
+        }
+
+        imgPlay.prototype.playNext = function() {
+            this.play((this.curIdx + 1) % this.imgCount);
+        }
+
+        imgPlay.prototype.autoPlay = function() {
+            let _this = this;
+            console.log(_this)
+            clock = setInterval(function() {
+                _this.playNext();
+            }, 2000);
+            // setInterval.call(_this, _this.playNext, 2000);
+        }
+
+        var m1 = new imgPlay($('.mod').eq(0));
+        var m2 = new imgPlay($('.mod').eq(1));
+    </script>
+</body>
+
+</html>
