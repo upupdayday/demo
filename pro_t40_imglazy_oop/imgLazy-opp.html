@@ -13,7 +13,7 @@
         }
         
         .wrap {
-            height: 700px;
+            min-height: 700px;
             overflow: hidden;
         }
         
@@ -125,7 +125,7 @@
                 }
 
                 clock = setTimeout(function() {
-                    console.log('111')
+                    // console.log('111')
                     _this.check();
                 }, 100)
             })
@@ -133,9 +133,10 @@
 
         Exposure.prototype.check = function() {
             if (this.once_check) {
-                if ((this.isVisible(this.$target)) && (!this.loaded)) {
-                    this.callback(this.$target)
+                if ((this.isVisible(this.$target)) && (!this.isLoaded(this.$target))) {
+                    this.callback(this.$target);
                 }
+
             } else {
                 if (this.isVisible(this.$target)) {
                     this.callback(this.$target)
@@ -143,10 +144,10 @@
             }
         }
 
-        Exposure.prototype.isVisible = function() {
+        Exposure.prototype.isVisible = function($node) {
             var windowHeight = $(window).height();
-            var offsetTop = this.$target.offset().top;
-            var nodeHeight = this.$target.height();
+            var offsetTop = $node.offset().top;
+            var nodeHeight = $node.height();
             var scrollTop = $(window).scrollTop();
             if (windowHeight + scrollTop > offsetTop + nodeHeight && scrollTop < offsetTop + nodeHeight) {
                 return true
@@ -154,6 +155,16 @@
 
             return false
         }
+
+        Exposure.prototype.isLoaded = function($node) {
+            if ($node.attr('loaded')) {
+                return true;
+            } else {
+                $node.attr('loaded', 'true');
+                return false;
+            }
+        }
+
 
         function showImg($node) {
             $node.attr('src', $node.attr('data-src'))

@@ -26,7 +26,7 @@
             overflow: hidden;
         }
         
-        .ct {
+        .img-ct {
             position: absolute;
         }
         
@@ -36,11 +36,11 @@
             clear: both;
         }
         
-        .ct li {
+        .img-ct li {
             float: left;
         }
         
-        .ct li a img {
+        .img-ct li a img {
             width: 320px;
             height: 180px;
         }
@@ -103,7 +103,7 @@
 
 <body>
     <div class="win">
-        <ul class="ct clearfix">
+        <ul class="img-ct clearfix">
             <li>
                 <a href="#"><img src="http://cdn.jirengu.com/book.jirengu.com/img/2.jpg" alt=""></a>
             </li>
@@ -128,9 +128,9 @@
                 </ul>
     </div>
     <script>
-        var $imgCt = $('.ct')
-        var $imgs = $('.ct>li')
-        var imgWidth = $('.ct li>a img').width()
+        var $imgCt = $('.img-ct')
+        var $imgs = $('.img-ct>li')
+        var imgWidth = $('.img-ct li>a img').width()
         var imgCount = $imgs.length
         var $menu = $('.menu')
         var $page = $('.menu>li')
@@ -148,6 +148,8 @@
 
         /*使用事件代理，在menu上绑定事件*/
         $menu.on('click', function(e) {
+            console.log('222');
+            console.log(e);
             menuSelect(e)
         })
 
@@ -161,6 +163,7 @@
 
 
         function menuSelect(event) {
+            console.log('111:' + this)
             var target = event.target
                 /*确认点击在li上*/
             if (target.tagName.toLowerCase() === 'li') {

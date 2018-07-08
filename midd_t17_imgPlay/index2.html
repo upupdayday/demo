@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <style>
+        ul,
+        li {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+        
+        a {
+            text-decoration: none;
+        }
+        
+        .win {
+            position: relative;
+            width: 320px;
+            height: 180px;
+            overflow: hidden;
+            margin: 0 auto;
+        }
+        
+        .img-ct {
+            position: absolute;
+        }
+        
+        .clearfix:after {
+            content: '';
+            display: block;
+            clear: both;
+        }
+        
+        .img-ct li {
+            float: left;
+        }
+        
+        .img-ct li a img {
+            width: 320px;
+            height: 180px;
+        }
+        
+        .pre,
+        .next {
+            top: 50%;
+            margin-top: -15px;
+            width: 30px;
+            height: 30px;
+            line-height: 30px;
+            position: absolute;
+            font-size: 15px;
+            text-align: center;
+            color: #fff;
+            border: 1px solid #fff;
+            border-radius: 50%;
+            background: #555;
+            opacity: 0.7;
+            z-index: 1;
+        }
+        
+        .pre:hover,
+        .next:hover {
+            opacity: 1;
+        }
+        
+        .pre {
+            left: 15px;
+        }
+        
+        .next {
+            right: 15px;
+        }
+        
+        .menu {
+            position: absolute;
+            bottom: 15px;
+            width: 100%;
+            font-size: 0;
+            text-align: center;
+            z-index: 1;
+        }
+        
+        .menu li {
+            display: inline-block;
+            width: 28px;
+            height: 7px;
+            margin: 0 5px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        
+        .menu li.active {
+            background: #ede;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="win">
+
+    </div>
+    <script>
+        function imgPlay($ct, imgSrc) {
+            this.$ct = $ct;
+            console.log('111:' + this.$ct)
+            this.imgSrc = imgSrc;
+            this.init();
+            this.bind();
+        }
+
+        imgPlay.prototype = {
+            init: function() {
+                let html1 = '';
+                let html2 = '';
+                let html3 = '';
+                let $ul1 = $('<ul>');
+                let $ul2 = $('<ul>');
+                for (let i = 0; i < this.imgSrc.length; i++) {
+                    // console.log(this.imgSrc[i]);
+                    html1 += '<li><a href="#"><img src="' + this.imgSrc[i] + '" alt=""></a></li>'
+                    if (i === 0) {
+                        html2 += '<li class="active"></li>';
+                    } else {
+                        html2 += '<li></li>';
+                    }
+                }
+                $ul1.append(html1);
+                $ul1.addClass('img-ct clearfix');
+                $ul2.append(html2);
+                $ul2.addClass('menu');
+                this.$ct.append($ul1);
+                this.$ct.append($ul2);
+                html3 = '<a class="pre" href="#"><</a>\
+                        <a class="next" href="#">></a>'
+                this.$ct.append(html3);
+
+                this.$imgCt = this.$ct.find('.img-ct');
+                this.$imgs = this.$ct.find('.img-ct>li');
+                this.imgWidth = this.$ct.find('.img-ct li>a img').width();
+                this.imgCount = this.$imgs.length;
+                this.$menu = this.$ct.find('.menu');
+                this.$page = this.$ct.find('.menu>li');
+                this.$playPre = this.$ct.find('.pre');
+                this.$playNext = this.$ct.find('.next');
+                this.imgIndex = 0;
+                this.isAnimate = false;
+
+                this.$imgCt.append(this.$imgs.first().clone())
+                this.$imgCt.prepend(this.$imgs.last().clone())
+                this.$imgCt.width((this.imgCount + 2) * this.imgWidth)
+                this.$imgCt.css({
+                    left: -this.imgWidth
+                })
+            },
+
+            menuSelect: function(event) {
+                let target = event.target
+                let _this = this;
+                console.log('menu:')
+                console.log(this)
+                    /*确认点击在li上*/
+                if (target.tagName.toLowerCase() === 'li') {
+                    /*原生JS对象用$包裹，转为jquery对象*/
+                    let $target = $(target)
+                    let cur = $target.index()
+                    if (cur < _this.imgIndex) {
+                        _this.playPre(_this.imgIndex - cur)
+
+                    } else if (cur > _this.imgIndex) {
+                        _this.playNext(cur - _this.imgIndex)
+                    }
+                }
+            },
+
+            playNext: function(len) {
+                let _this = this;
+                if (_this.isAnimate) {
+                    return
+                }
+                _this.isAnimate = true;
+
+                _this.$imgCt.animate({
+                        left: '-=' + _this.imgWidth * len
+                    }, function() {
+                        _this.imgIndex += len
+                        if (_this.imgIndex === _this.imgCount) {
+                            _this.$imgCt.css({
+                                left: -_this.imgWidth
+                            })
+                            _this.imgIndex = 0
+                        }
+
+                        _this.setPage()
+                        _this.isAnimate = false /*解锁需要在函数中*/
+                    })
+                    /*如在此处解锁，那回调函数没执行完就解锁了，没有起到限制作用*/
+                    /*isAnimate = false*/
+            },
+
+            playPre: function(len) {
+                let _this = this;
+                if (_this.isAnimate) {
+                    return
+                }
+                _this.isAnimate = true;
+
+                _this.$imgCt.animate({
+                    left: '+=' + _this.imgWidth * len
+                }, function() {
+                    _this.imgIndex -= len;
+                    if (_this.imgIndex < 0) {
+                        _this.$imgCt.css({
+                            left: -_this.imgWidth * _this.imgCount
+                        })
+                        _this.imgIndex = _this.imgCount - 1
+                    }
+
+                    _this.setPage()
+                    _this.isAnimate = false
+                })
+            },
+
+            setPage: function() {
+                let _this = this;
+                _this.$page.removeClass('active')
+                    .eq(_this.imgIndex).addClass('active')
+            },
+
+            bind: function() {
+                let _this = this;
+                _this.$menu.on('click', function(e) {
+                    _this.menuSelect(e);
+                });
+                _this.$playNext.on('click', function() {
+                    _this.playNext(1)
+                });
+                _this.$playPre.on('click', function() {
+                    _this.playPre(1)
+                });
+            }
+        }
+
+        let imgSrc = ['http://cdn.jirengu.com/book.jirengu.com/img/2.jpg',
+            'http://cdn.jirengu.com/book.jirengu.com/img/3.jpg',
+            'http://cdn.jirengu.com/book.jirengu.com/img/4.jpg',
+            'http://cdn.jirengu.com/book.jirengu.com/img/5.jpg',
+        ];
+
+        let imgP1 = new imgPlay($('.win'), imgSrc);
+    </script>
+</body>
+
+</html>
