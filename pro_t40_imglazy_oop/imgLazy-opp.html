@@ -175,13 +175,13 @@
 
         var Lazy = (function() {
             return {
-                init: function($targets, callback) {
+                realTime: function($targets, callback) {
                     $targets.each(function(idx, target) {
                         new Exposure($(target), false, callback);
                     })
                 },
 
-                one: function($targets, callback) {
+                once: function($targets, callback) {
                     $targets.each(function(idx, target) {
                         new Exposure($(target), true, callback);
                     })
@@ -189,13 +189,13 @@
             }
         })()
 
-        Lazy.init($('#hello'), function($node) {
+        Lazy.realTime($('#hello'), function($node) {
             $node.text($node.text() + '123');
         });
-        Lazy.init($('#world'), function($node) {
+        Lazy.realTime($('#world'), function($node) {
             $node.text($node.text() + '456');
         });
-        Lazy.one($('.container img'), function($node) {
+        Lazy.once($('.container img'), function($node) {
             showImg($node);
         });
     </script>
