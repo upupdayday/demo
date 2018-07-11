@@ -238,20 +238,20 @@
             }
         }
 
-
         $('#open1').on('click', function() {
-            let Diag = new DialogCtor();
-            Diag.open('hello, world');
+            console.log(tt)
+            var Diag1 = new DialogCtor();
+            Diag1.open('hello, world');
         });
 
         $('#open2').on('click', function() {
-            let Diag = new DialogCtor();
-            Diag.open('<a href="https://www.baidu.com">search the world</a>');
+            var Diag2 = new DialogCtor();
+            Diag2.open('<a href="https://www.baidu.com">search the world</a>');
         });
 
         $('#open3').on('click', function() {
-            let Diag = new DialogCtor();
-            Diag.open({
+            var Diag3 = new DialogCtor();
+            Diag3.open({
                 title: 'Welcom to Earth',
                 message: 'hello world',
                 isShowCloseBtn: true,
@@ -267,8 +267,8 @@
 
         var tpl = '<ul><li>列表1</li><li>列表2</li><li>列表1</li><li>列表1</li></ul>';
         $('#open4').on('click', function() {
-            let Diag = new DialogCtor();
-            Diag.open({
+            var Diag4 = new DialogCtor();
+            Diag4.open({
                 title: 'Welcom to Earth',
                 message: tpl,
                 isShowCloseBtn: true,
@@ -282,8 +282,8 @@
             });
         });
         $('#open5').on('click', function() {
-            let Diag = new DialogCtor();
-            Diag.open({
+            var Diag5 = new DialogCtor();
+            Diag5.open({
                 title: 'Welcom to Earth',
                 message: 'hello world',
                 isShowCloseBtn: false,
